@@ -97,7 +97,7 @@
                     <th>Munisipiu</th>
                     @endif
                     <th>Data Rejistu</th>
-                    <th>Petugás</th>
+                    <th>Inputu Husi</th>
                     <th width="100">Aksaun</th>
                 </tr>
             </thead>
@@ -135,7 +135,19 @@
                     </td>
                     @endif
                     <td class="text-nowrap">{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
-                    <td class="text-muted small">{{ $p->petugas ?? '—' }}</td>
+                    <td class="text-muted small">
+                        @if($p->inputOleh)
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                                    style="width:22px;height:22px;font-size:.6rem;background:#1971c2;flex-shrink:0;">
+                                    {{ strtoupper(substr($p->inputOleh->name, 0, 2)) }}
+                                </div>
+                                <span>{{ $p->inputOleh->name }}</span>
+                            </div>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
                     <td>
                         <div class="d-flex gap-1">
                             <a href="{{ route('pendaftaran.show', $p->id) }}" class="btn btn-xs btn-outline-primary" title="Detail" style="font-size:.75rem;padding:.2rem .5rem;">
@@ -157,7 +169,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="{{ auth()->user()->canSeeAll() ? 9 : 8 }}" class="text-center text-muted py-5">
+                    <td colspan="{{ auth()->user()->canSeeAll() ? 9 : 8 }}" class="text-center text-muted py-5 align-middle">
                         <i class="fas fa-inbox fa-2x mb-2 d-block opacity-25"></i>
                         La iha rejistu ne'ebé hetan.
                     </td>

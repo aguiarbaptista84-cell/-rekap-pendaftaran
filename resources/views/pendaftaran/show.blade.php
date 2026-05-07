@@ -133,7 +133,26 @@
 
         <div class="card stat-card mt-3">
             <div class="card-body">
-                <div class="text-muted small mb-1">Kria iha</div>
+                <div class="text-muted small mb-1">Inputu Husi</div>
+                <div class="small fw-semibold">
+                    @if($data->inputOleh)
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                                style="width:28px;height:28px;font-size:.65rem;background:#1971c2;flex-shrink:0;">
+                                {{ strtoupper(substr($data->inputOleh->name, 0, 2)) }}
+                            </div>
+                            <div>
+                                <div>{{ $data->inputOleh->name }}</div>
+                                @if($data->inputOleh->munisipiu)
+                                    <small class="text-muted">{{ $data->inputOleh->munisipiu }}</small>
+                                @endif
+                            </div>
+                        </div>
+                    @else
+                        <span class="text-muted">—</span>
+                    @endif
+                </div>
+                <div class="text-muted small mt-3 mb-1">Kria iha</div>
                 <div class="small fw-semibold">{{ $data->created_at->format('d/m/Y H:i') }}</div>
                 <div class="text-muted small mt-2 mb-1">Atualiza ikus</div>
                 <div class="small fw-semibold">{{ $data->updated_at->format('d/m/Y H:i') }}</div>

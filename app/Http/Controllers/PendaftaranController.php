@@ -45,7 +45,7 @@ class PendaftaranController extends Controller
             $query->where('munisipiu', $request->munisipiu);
         }
 
-        $pendaftaran  = $query->orderBy('created_at', 'desc')->paginate(15)->withQueryString();
+        $pendaftaran  = $query->with('inputOleh')->orderBy('created_at', 'desc')->paginate(15)->withQueryString();
         $jenisDokumen = Pendaftaran::$jenisDokumen;
         $munisipiuList = \App\Models\User::$munisipiuList;
 
@@ -84,6 +84,7 @@ class PendaftaranController extends Controller
         ]);
 
         $validated['munisipiu']     = $user->isUser() ? $user->munisipiu : $request->munisipiu;
+        $validated['user_id']       = $user->id;
         $validated['no_registrasi'] = Pendaftaran::generateNoRegistrasi($validated['jenis_dokumen']);
 
         Pendaftaran::create($validated);
@@ -94,7 +95,7 @@ class PendaftaranController extends Controller
 
     public function show(string $id)
     {
-        $data = $this->baseQuery()->findOrFail($id);
+        $data = $this->baseQuery()->with('inputOleh')->findOrFail($id);
         return view('pendaftaran.show', compact('data'));
     }
 
