@@ -107,7 +107,7 @@
                     <i class="fas {{ $ic }}"></i>
                 </div>
                 <div>
-                    <div class="fw-bold fs-4 text-{{ $c }}">{{ $byRole[$r]?->count() ?? 0 }}</div>
+                    <div class="fw-bold fs-4 text-{{ $c }}">{{ isset($byRole[$r]) ? $byRole[$r]->count() : 0 }}</div>
                     <div class="text-muted small">{{ $l }}</div>
                 </div>
             </div>
