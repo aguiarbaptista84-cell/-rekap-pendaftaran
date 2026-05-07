@@ -18,7 +18,10 @@ class RekapController extends Controller
         $query = Pendaftaran::whereYear('tanggal_daftar', $tahun);
 
         if ($user->isUser()) {
-            $query->where('munisipiu', $user->munisipiu);
+            $query->where(function ($q) use ($user) {
+                $q->where('munisipiu', $user->munisipiu)
+                  ->orWhere('user_id', $user->id);
+            });
         }
         if ($bulan) {
             $query->whereMonth('tanggal_daftar', $bulan);

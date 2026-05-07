@@ -15,7 +15,10 @@ class PendaftaranController extends Controller
         $user  = Auth::user();
         $query = Pendaftaran::query();
         if ($user->isUser()) {
-            $query->where('munisipiu', $user->munisipiu);
+            $query->where(function ($q) use ($user) {
+                $q->where('munisipiu', $user->munisipiu)
+                  ->orWhere('user_id', $user->id);
+            });
         }
         return $query;
     }

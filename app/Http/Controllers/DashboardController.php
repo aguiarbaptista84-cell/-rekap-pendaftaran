@@ -16,7 +16,10 @@ class DashboardController extends Controller
         $query = Pendaftaran::query();
 
         if ($user->isUser()) {
-            $query->where('munisipiu', $user->munisipiu);
+            $query->where(function ($q) use ($user) {
+                $q->where('munisipiu', $user->munisipiu)
+                  ->orWhere('user_id', $user->id);
+            });
         }
 
         $total     = (clone $query)->count();
