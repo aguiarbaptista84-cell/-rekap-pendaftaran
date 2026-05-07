@@ -27,6 +27,7 @@ class Pendaftaran extends Model
         'nomor_dokumen',
         'keterangan',
         'petugas',
+        'munisipiu',
     ];
 
     protected $casts = [
