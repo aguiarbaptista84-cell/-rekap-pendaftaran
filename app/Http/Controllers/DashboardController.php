@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Pendaftaran;
+use App\Helpers\DbHelper;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        /** @var \App\Models\User $user */
+        $user  = Auth::user();
+        $query = Pendaftaran::query();
+
+        if ($user->isUser()) {
+            $query->where('munisipiu', $user->munisipiu);
+        }
+
+        $total     = (clone $query)->count();
+        $halo_foun = (clone $query)->where('status', 'halo_foun')->count();
+        $renova    = (clone $query)->where('status', 'renova')->count();
+        $lakon     = (clone $query)->where('status', 'lakon')->count();
+
+        $perDokumen = (clone $query)
+            ->select('jenis_dokumen', DB::raw('count(*) as total'))
+            ->groupBy('jenis_dokumen')
+            ->pluck('total', 'jenis_dokumen')
+            ->toArray();
+
+        $perBulan = (clone $query)
+            ->select(
+                DB::raw(DbHelper::dateFormat('tanggal_daftar', '%Y-%m') . ' as bulan'),
+                DB::raw('count(*) as total')
+            )
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->get();
+
+        $terbaru = (clone $query)->orderBy('created_at', 'desc')->limit(10)->get();
+
+        return view('dashboard', compact(
+            'total', 'halo_foun', 'renova', 'lakon',
+            'perDokumen', 'perBulan', 'terbaru'
+        ));
+    }
+}
