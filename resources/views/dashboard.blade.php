@@ -119,6 +119,72 @@
     </div>
 </div>
 
+{{-- Tabel Per Munisipiu --}}
+<div class="card stat-card mb-4">
+    <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">
+            <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+            Rejistu Per Munisipiu
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Munisipiu</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center text-primary">Halo Foun</th>
+                        <th class="text-center text-warning">Renova</th>
+                        <th class="text-center text-danger">Lakon</th>
+                        <th class="text-center">Aksaun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($perMunisipiu as $row)
+                    <tr>
+                        <td>
+                            <span class="fw-semibold">
+                                <i class="fas fa-building me-1 text-primary"></i>{{ $row->munisipiu }}
+                            </span>
+                        </td>
+                        <td class="text-center fw-bold">{{ $row->total }}</td>
+                        <td class="text-center"><span class="badge bg-primary">{{ $row->halo_foun }}</span></td>
+                        <td class="text-center"><span class="badge bg-warning text-dark">{{ $row->renova }}</span></td>
+                        <td class="text-center"><span class="badge bg-danger">{{ $row->lakon }}</span></td>
+                        <td class="text-center">
+                            <a href="{{ route('pendaftaran.index', ['munisipiu' => $row->munisipiu]) }}"
+                               class="btn btn-xs btn-outline-primary" style="font-size:.75rem;padding:.2rem .5rem;">
+                                <i class="fas fa-list me-1"></i>Haree
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-2x mb-2 d-block opacity-25"></i>
+                            La iha rejistu seidauk.
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+                @if($perMunisipiu->count() > 1)
+                <tfoot class="table-light fw-bold">
+                    <tr>
+                        <td>Total Hotu</td>
+                        <td class="text-center">{{ $perMunisipiu->sum('total') }}</td>
+                        <td class="text-center text-primary">{{ $perMunisipiu->sum('halo_foun') }}</td>
+                        <td class="text-center text-warning">{{ $perMunisipiu->sum('renova') }}</td>
+                        <td class="text-center text-danger">{{ $perMunisipiu->sum('lakon') }}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+                @endif
+            </table>
+        </div>
+    </div>
+</div>
+
 {{-- Tabel Terbaru --}}
 <div class="card stat-card">
     <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
@@ -134,6 +200,10 @@
                         <th>Naran</th>
                         <th>Dokumentu</th>
                         <th>Status</th>
+                        @if($user->canSeeAll())
+                        <th>Munisipiu</th>
+                        <th>Inputu Husi</th>
+                        @endif
                         <th>Data Rejistu</th>
                         <th></th>
                     </tr>
@@ -151,7 +221,31 @@
                         <td>
                             <span class="badge bg-{{ $p->badge_status }}">{{ $p->label_status }}</span>
                         </td>
-                        <td>{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
+                        @if($user->canSeeAll())
+                        <td>
+                            @if($p->munisipiu)
+                                <span class="badge" style="background:#e8f4fd;color:#0a58ca;font-size:.78rem;">
+                                    {{ $p->munisipiu }}
+                                </span>
+                            @else
+                                <span class="text-muted small">—</span>
+                            @endif
+                        </td>
+                        <td class="text-muted small">
+                            @if($p->inputOleh)
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                                        style="width:22px;height:22px;font-size:.6rem;background:#1971c2;flex-shrink:0;">
+                                        {{ strtoupper(substr($p->inputOleh->name, 0, 2)) }}
+                                    </div>
+                                    <span>{{ $p->inputOleh->name }}</span>
+                                </div>
+                            @else
+                                <span class="text-muted">—</span>
+                            @endif
+                        </td>
+                        @endif
+                        <td class="text-nowrap">{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
                         <td>
                             <a href="{{ route('pendaftaran.show', $p->id) }}" class="btn btn-xs btn-outline-secondary" style="font-size:.75rem;padding:.15rem .5rem;">
                                 <i class="fas fa-eye"></i>
@@ -159,7 +253,11 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="6" class="text-center text-muted py-4">La iha rejistu seidauk.</td></tr>
+                    <tr>
+                        <td colspan="{{ $user->canSeeAll() ? 8 : 6 }}" class="text-center text-muted py-4">
+                            La iha rejistu seidauk.
+                        </td>
+                    </tr>
                     @endforelse
                 </tbody>
             </table>
