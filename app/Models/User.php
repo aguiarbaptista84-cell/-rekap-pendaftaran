@@ -23,9 +23,9 @@ class User extends Authenticatable
     }
 
     public static $munisipiuList = [
-        'Aileu', 'Ainaro', 'Baucau', 'Bobonaro', 'Covalima',
-        'Dili', 'Ermera', 'Lautém', 'Liquiçá', 'Manatuto',
-        'Manufahi', 'Oecusse', 'Viqueque', 'Ataúro',
+        'Aileu', 'Ainaro', 'Atauro', 'Baucau', 'Bobonaro',
+        'Covalima', 'Dili', 'Ermera', 'Lautem', 'Liquica',
+        'Manatuto', 'Manufahi', 'Oecusse', 'Viqueque',
     ];
 
     public static $roleLabels = [
