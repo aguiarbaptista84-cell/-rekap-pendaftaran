@@ -119,6 +119,89 @@
     </div>
 </div>
 
+@if($user->isUser())
+{{-- ===== USER ROLE: Daftar pendaftaran munisipiu sendiri ===== --}}
+<div class="card stat-card">
+    <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">
+            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+            Rejistu Munisipiu <span class="text-primary">{{ $user->munisipiu }}</span>
+            <span class="badge bg-primary ms-1">{{ $terbaru->count() }}</span>
+        </span>
+        <a href="{{ route('pendaftaran.index') }}" class="btn btn-sm btn-outline-danger">Haree Hotu</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th width="40">#</th>
+                        <th>No. Rejistu</th>
+                        <th>Naran Kompletu</th>
+                        <th>Dokumentu</th>
+                        <th>Status</th>
+                        <th>Inputu Husi</th>
+                        <th>Data Rejistu</th>
+                        <th width="60"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($terbaru as $i => $p)
+                    <tr>
+                        <td class="text-muted small">{{ $i + 1 }}</td>
+                        <td><code class="text-danger">{{ $p->no_registrasi }}</code></td>
+                        <td>
+                            <strong>{{ $p->nama_lengkap }}</strong>
+                            @if($p->no_bi)
+                                <br><small class="text-muted">BI: {{ $p->no_bi }}</small>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="badge" style="background:{{ ['passaporte'=>'#3b5bdb','bi'=>'#0ca678','rejistu_kriminal'=>'#e8590c','rdtl'=>'#862e9c','eleitoral'=>'#1971c2','sim'=>'#f08c00'][$p->jenis_dokumen] ?? '#666' }}">
+                                {{ $p->label_jenis_dokumen }}
+                            </span>
+                        </td>
+                        <td><span class="badge bg-{{ $p->badge_status }}">{{ $p->label_status }}</span></td>
+                        <td class="text-muted small">
+                            @if($p->inputOleh)
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                                        style="width:22px;height:22px;font-size:.6rem;background:#1971c2;flex-shrink:0;">
+                                        {{ strtoupper(substr($p->inputOleh->name, 0, 2)) }}
+                                    </div>
+                                    <span>{{ $p->inputOleh->name }}</span>
+                                </div>
+                            @else
+                                <span class="text-muted">—</span>
+                            @endif
+                        </td>
+                        <td class="text-nowrap small">{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ route('pendaftaran.show', $p->id) }}" class="btn btn-xs btn-outline-secondary" style="font-size:.75rem;padding:.15rem .5rem;">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-5">
+                            <i class="fas fa-inbox fa-2x mb-2 d-block opacity-25"></i>
+                            La iha rejistu ba Munisipiu {{ $user->munisipiu }} seidauk.<br>
+                            <a href="{{ route('pendaftaran.create') }}" class="btn btn-sm btn-danger mt-2">
+                                <i class="fas fa-plus me-1"></i> Rejistu Foun
+                            </a>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@else
+{{-- ===== ADMIN / DIRETOR: Ringkasan per munisipiu + rejistu ikus ===== --}}
+
 {{-- Tabel Per Munisipiu --}}
 <div class="card stat-card mb-4">
     <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
@@ -143,10 +226,8 @@
                 <tbody>
                     @forelse($perMunisipiu as $row)
                     <tr>
-                        <td>
-                            <span class="fw-semibold">
-                                <i class="fas fa-building me-1 text-primary"></i>{{ $row->munisipiu }}
-                            </span>
+                        <td class="fw-semibold">
+                            <i class="fas fa-building me-1 text-primary"></i>{{ $row->munisipiu }}
                         </td>
                         <td class="text-center fw-bold">{{ $row->total }}</td>
                         <td class="text-center"><span class="badge bg-primary">{{ $row->halo_foun }}</span></td>
@@ -168,10 +249,10 @@
                     </tr>
                     @endforelse
                 </tbody>
-                @if($perMunisipiu->count() > 1)
+                @if($perMunisipiu->count() > 0)
                 <tfoot class="table-light fw-bold">
                     <tr>
-                        <td>Total Hotu</td>
+                        <td>Total Hotu-hotu</td>
                         <td class="text-center">{{ $perMunisipiu->sum('total') }}</td>
                         <td class="text-center text-primary">{{ $perMunisipiu->sum('halo_foun') }}</td>
                         <td class="text-center text-warning">{{ $perMunisipiu->sum('renova') }}</td>
@@ -185,7 +266,7 @@
     </div>
 </div>
 
-{{-- Tabel Terbaru --}}
+{{-- Tabel Rejistu Ikus --}}
 <div class="card stat-card">
     <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
         <span class="fw-semibold"><i class="fas fa-clock me-2 text-danger"></i>Rejistu Ikus (10 Ikus)</span>
@@ -200,10 +281,8 @@
                         <th>Naran</th>
                         <th>Dokumentu</th>
                         <th>Status</th>
-                        @if($user->canSeeAll())
                         <th>Munisipiu</th>
                         <th>Inputu Husi</th>
-                        @endif
                         <th>Data Rejistu</th>
                         <th></th>
                     </tr>
@@ -218,10 +297,7 @@
                                 {{ $p->label_jenis_dokumen }}
                             </span>
                         </td>
-                        <td>
-                            <span class="badge bg-{{ $p->badge_status }}">{{ $p->label_status }}</span>
-                        </td>
-                        @if($user->canSeeAll())
+                        <td><span class="badge bg-{{ $p->badge_status }}">{{ $p->label_status }}</span></td>
                         <td>
                             @if($p->munisipiu)
                                 <span class="badge" style="background:#e8f4fd;color:#0a58ca;font-size:.78rem;">
@@ -244,7 +320,6 @@
                                 <span class="text-muted">—</span>
                             @endif
                         </td>
-                        @endif
                         <td class="text-nowrap">{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
                         <td>
                             <a href="{{ route('pendaftaran.show', $p->id) }}" class="btn btn-xs btn-outline-secondary" style="font-size:.75rem;padding:.15rem .5rem;">
@@ -254,9 +329,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="{{ $user->canSeeAll() ? 8 : 6 }}" class="text-center text-muted py-4">
-                            La iha rejistu seidauk.
-                        </td>
+                        <td colspan="8" class="text-center text-muted py-4">La iha rejistu seidauk.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -264,6 +337,7 @@
         </div>
     </div>
 </div>
+@endif
 
 @endsection
 

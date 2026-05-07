@@ -42,15 +42,15 @@ class DashboardController extends Controller
             ->orderBy('bulan')
             ->get();
 
-        $terbaru = (clone $query)->with('inputOleh')->orderBy('created_at', 'desc')->limit(10)->get();
+        // Untuk user role: daftar lengkap entri munisipiu mereka (limit 20)
+        // Untuk admin/diretor: 10 entri terbaru semua munisipiu
+        $limitTerbaru = $user->isUser() ? 20 : 10;
+        $terbaru = (clone $query)->with('inputOleh')->orderBy('created_at', 'desc')->limit($limitTerbaru)->get();
 
-        // Ringkasan per munisipiu (hotu-hotu tanpa filter munisipiu ba admin/diretor)
-        $queryMuni = $user->isUser()
-            ? (clone $query)
-            : Pendaftaran::query();
-
-        $perMunisipiu = (clone $queryMuni)
-            ->select('munisipiu', DB::raw('count(*) as total'),
+        // Ringkasan per munisipiu (semua munisipiu tanpa filter untuk admin/diretor)
+        $perMunisipiu = Pendaftaran::query()
+            ->select('munisipiu',
+                DB::raw('count(*) as total'),
                 DB::raw("sum(case when status='halo_foun' then 1 else 0 end) as halo_foun"),
                 DB::raw("sum(case when status='renova' then 1 else 0 end) as renova"),
                 DB::raw("sum(case when status='lakon' then 1 else 0 end) as lakon")
