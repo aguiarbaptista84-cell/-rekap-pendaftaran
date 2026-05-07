@@ -64,6 +64,27 @@
                         </div>
                     </div>
 
+                    {{-- Munisipiu --}}
+                    @if(auth()->user()->isUser())
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Munisipiu</label>
+                        <div class="form-control bg-light text-primary fw-semibold" style="cursor:default;">
+                            <i class="fas fa-map-marker-alt me-1"></i>{{ auth()->user()->munisipiu }}
+                        </div>
+                    </div>
+                    @else
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Munisipiu <span class="text-danger">*</span></label>
+                        <select name="munisipiu" class="form-select @error('munisipiu') is-invalid @enderror">
+                            <option value="">— Hili Munisipiu —</option>
+                            @foreach($munisipiuList as $m)
+                                <option value="{{ $m }}" {{ old('munisipiu', $data->munisipiu) === $m ? 'selected' : '' }}>{{ $m }}</option>
+                            @endforeach
+                        </select>
+                        @error('munisipiu')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    @endif
+
                     <hr class="my-3">
                     <h6 class="text-muted mb-3"><i class="fas fa-file-alt me-2"></i>Informasaun Dokumentu</h6>
 

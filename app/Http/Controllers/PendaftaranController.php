@@ -55,14 +55,16 @@ class PendaftaranController extends Controller
     public function create()
     {
         $this->authCanWrite();
-        $jenisDokumen = Pendaftaran::$jenisDokumen;
-        $petugas      = Petugas::where('aktif', true)->orderBy('nama')->get();
-        return view('pendaftaran.create', compact('jenisDokumen', 'petugas'));
+        $jenisDokumen  = Pendaftaran::$jenisDokumen;
+        $petugas       = Petugas::where('aktif', true)->orderBy('nama')->get();
+        $munisipiuList = \App\Models\User::$munisipiuList;
+        return view('pendaftaran.create', compact('jenisDokumen', 'petugas', 'munisipiuList'));
     }
 
     public function store(Request $request)
     {
         $this->authCanWrite();
+        $user = Auth::user();
         $validated = $request->validate([
             'nama_lengkap'   => 'required|string|max:150',
             'no_bi'          => 'nullable|string|max:30',
@@ -78,10 +80,10 @@ class PendaftaranController extends Controller
             'nomor_dokumen'  => 'nullable|string|max:50',
             'keterangan'     => 'nullable|string',
             'petugas'        => 'nullable|string|max:100',
+            'munisipiu'      => $user->isUser() ? 'nullable' : 'required|string|max:50',
         ]);
 
-        $user = Auth::user();
-        $validated['munisipiu']    = $user->isUser() ? $user->munisipiu : $request->munisipiu;
+        $validated['munisipiu']     = $user->isUser() ? $user->munisipiu : $request->munisipiu;
         $validated['no_registrasi'] = Pendaftaran::generateNoRegistrasi($validated['jenis_dokumen']);
 
         Pendaftaran::create($validated);
@@ -99,10 +101,11 @@ class PendaftaranController extends Controller
     public function edit(string $id)
     {
         $this->authCanWrite();
-        $data         = $this->baseQuery()->findOrFail($id);
-        $jenisDokumen = Pendaftaran::$jenisDokumen;
-        $petugas      = Petugas::where('aktif', true)->orderBy('nama')->get();
-        return view('pendaftaran.edit', compact('data', 'jenisDokumen', 'petugas'));
+        $data          = $this->baseQuery()->findOrFail($id);
+        $jenisDokumen  = Pendaftaran::$jenisDokumen;
+        $petugas       = Petugas::where('aktif', true)->orderBy('nama')->get();
+        $munisipiuList = \App\Models\User::$munisipiuList;
+        return view('pendaftaran.edit', compact('data', 'jenisDokumen', 'petugas', 'munisipiuList'));
     }
 
     public function update(Request $request, string $id)
@@ -125,7 +128,11 @@ class PendaftaranController extends Controller
             'nomor_dokumen'  => 'nullable|string|max:50',
             'keterangan'     => 'nullable|string',
             'petugas'        => 'nullable|string|max:100',
+            'munisipiu'      => 'nullable|string|max:50',
         ]);
+
+        $user = Auth::user();
+        $validated['munisipiu'] = $user->isUser() ? $user->munisipiu : $request->munisipiu;
 
         $data->update($validated);
 

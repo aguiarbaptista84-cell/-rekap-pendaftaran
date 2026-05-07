@@ -5,6 +5,14 @@
 
 @section('content')
 
+{{-- Info badge untuk user munisipiu --}}
+@if(auth()->user()->isUser())
+<div class="alert alert-info py-2 mb-3 d-flex align-items-center gap-2" style="font-size:.9rem;">
+    <i class="fas fa-map-marker-alt text-primary"></i>
+    Ita Boot haree rejistu husi Munisipiu <strong>{{ auth()->user()->munisipiu }}</strong> deit.
+</div>
+@endif
+
 {{-- Filter --}}
 <div class="card stat-card mb-3">
     <div class="card-body py-2">
@@ -31,6 +39,17 @@
                     <option value="lakon"     {{ request('status') === 'lakon'     ? 'selected' : '' }}>Lakon</option>
                 </select>
             </div>
+            @if(auth()->user()->canSeeAll())
+            <div class="col-6 col-md-2">
+                <label class="form-label form-label-sm text-muted">Munisipiu</label>
+                <select name="munisipiu" class="form-select form-select-sm">
+                    <option value="">Hotu-hotu</option>
+                    @foreach($munisipiuList as $m)
+                        <option value="{{ $m }}" {{ request('munisipiu') === $m ? 'selected' : '' }}>{{ $m }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
             <div class="col-6 col-md-2">
                 <label class="form-label form-label-sm text-muted">Husi Data</label>
                 <input type="date" name="dari" class="form-control form-control-sm" value="{{ request('dari') }}">
@@ -52,10 +71,15 @@
     <div class="text-muted small">
         Haree <strong>{{ $pendaftaran->firstItem() ?? 0 }}–{{ $pendaftaran->lastItem() ?? 0 }}</strong>
         husi <strong>{{ $pendaftaran->total() }}</strong> rejistu
+        @if(request('munisipiu'))
+            — Munisipiu: <strong class="text-primary">{{ request('munisipiu') }}</strong>
+        @endif
     </div>
+    @if(auth()->user()->canWrite())
     <a href="{{ route('pendaftaran.create') }}" class="btn btn-danger btn-sm">
         <i class="fas fa-plus me-1"></i> Rejistu Foun
     </a>
+    @endif
 </div>
 
 {{-- Tabel --}}
@@ -69,6 +93,9 @@
                     <th>Naran Kompletu</th>
                     <th>Dokumentu</th>
                     <th>Status</th>
+                    @if(auth()->user()->canSeeAll())
+                    <th>Munisipiu</th>
+                    @endif
                     <th>Data Rejistu</th>
                     <th>Petugás</th>
                     <th width="100">Aksaun</th>
@@ -96,6 +123,17 @@
                     <td>
                         <span class="badge bg-{{ $p->badge_status }}">{{ $p->label_status }}</span>
                     </td>
+                    @if(auth()->user()->canSeeAll())
+                    <td>
+                        @if($p->munisipiu)
+                            <span class="badge" style="background:#e8f4fd;color:#0a58ca;font-size:.8rem;">
+                                <i class="fas fa-map-marker-alt me-1"></i>{{ $p->munisipiu }}
+                            </span>
+                        @else
+                            <span class="text-muted small">—</span>
+                        @endif
+                    </td>
+                    @endif
                     <td class="text-nowrap">{{ $p->tanggal_daftar->format('d/m/Y') }}</td>
                     <td class="text-muted small">{{ $p->petugas ?? '—' }}</td>
                     <td>
@@ -103,6 +141,7 @@
                             <a href="{{ route('pendaftaran.show', $p->id) }}" class="btn btn-xs btn-outline-primary" title="Detail" style="font-size:.75rem;padding:.2rem .5rem;">
                                 <i class="fas fa-eye"></i>
                             </a>
+                            @if(auth()->user()->canWrite())
                             <a href="{{ route('pendaftaran.edit', $p->id) }}" class="btn btn-xs btn-outline-warning" title="Edit" style="font-size:.75rem;padding:.2rem .5rem;">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -112,12 +151,13 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center text-muted py-5">
+                    <td colspan="{{ auth()->user()->canSeeAll() ? 9 : 8 }}" class="text-center text-muted py-5">
                         <i class="fas fa-inbox fa-2x mb-2 d-block opacity-25"></i>
                         La iha rejistu ne'ebé hetan.
                     </td>
