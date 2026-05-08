@@ -86,7 +86,7 @@
         <i class="fas fa-chart-bar me-2 text-danger"></i>
         Pendaftaran per Fulan — Tinan {{ $tahun }}
         @if($bulan) <small class="text-muted ms-1">({{ $bulanList[$bulan] ?? $bulan }})</small> @endif
-        @if(auth()->user()->canSeeAll() && $muni) <span class="badge bg-primary ms-1">{{ $muni }}</span> @endif
+        @if(auth()->user()->canSeeAll() && $muni) <span class="badge bg-primary ms-1">BU {{ $muni }}</span> @endif
     </div>
     <div class="card-body">
         <canvas id="chartBulan" style="max-height:220px;"></canvas>

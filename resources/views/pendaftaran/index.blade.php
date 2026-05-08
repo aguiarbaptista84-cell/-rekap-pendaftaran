@@ -9,7 +9,7 @@
 @if(auth()->user()->isUser())
 <div class="alert alert-info py-2 mb-3 d-flex align-items-center gap-2" style="font-size:.9rem;">
     <i class="fas fa-map-marker-alt text-primary"></i>
-    Ita Boot haree rejistu husi Munisipiu <strong>{{ auth()->user()->munisipiu }}</strong> deit.
+    Ita Boot haree rejistu husi Munisipiu <strong>BU {{ auth()->user()->munisipiu }}</strong> deit.
 </div>
 @endif
 
@@ -72,7 +72,7 @@
         Haree <strong>{{ $pendaftaran->firstItem() ?? 0 }}–{{ $pendaftaran->lastItem() ?? 0 }}</strong>
         husi <strong>{{ $pendaftaran->total() }}</strong> rejistu
         @if(request('munisipiu'))
-            — Munisipiu: <strong class="text-primary">{{ request('munisipiu') }}</strong>
+            — Munisipiu: <strong class="text-primary">BU {{ request('munisipiu') }}</strong>
         @endif
     </div>
     @if(auth()->user()->canWrite())
@@ -127,7 +127,7 @@
                     <td>
                         @if($p->munisipiu)
                             <span class="badge" style="background:#e8f4fd;color:#0a58ca;font-size:.8rem;">
-                                <i class="fas fa-map-marker-alt me-1"></i>{{ $p->munisipiu }}
+                                <i class="fas fa-map-marker-alt me-1"></i>BU {{ $p->munisipiu }}
                             </span>
                         @else
                             <span class="text-muted small">—</span>

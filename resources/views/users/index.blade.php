@@ -134,7 +134,7 @@
 <div class="mb-3">
     <div class="d-flex align-items-center gap-2 mb-1">
         <span class="fw-bold text-primary" style="font-size:.95rem;">
-            <i class="fas fa-building me-1"></i>{{ $munisipiu ?: 'Munisipiu La Defini' }}
+            <i class="fas fa-building me-1"></i>{{ $munisipiu ? 'BU ' . $munisipiu : 'Munisipiu La Defini' }}
         </span>
         <span class="badge bg-primary bg-opacity-15 text-primary">{{ $muUsers->count() }} utilizadór</span>
     </div>

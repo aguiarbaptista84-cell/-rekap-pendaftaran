@@ -125,7 +125,7 @@
     <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
         <span class="fw-semibold">
             <i class="fas fa-map-marker-alt me-2 text-primary"></i>
-            Rejistu Munisipiu <span class="text-primary">{{ $user->munisipiu }}</span>
+            Rejistu Munisipiu <span class="text-primary">BU {{ $user->munisipiu }}</span>
             <span class="badge bg-primary ms-1">{{ $terbaru->count() }}</span>
         </span>
         <a href="{{ route('pendaftaran.index') }}" class="btn btn-sm btn-outline-danger">Haree Hotu</a>
@@ -186,7 +186,7 @@
                     <tr>
                         <td colspan="8" class="text-center text-muted py-5">
                             <i class="fas fa-inbox fa-2x mb-2 d-block opacity-25"></i>
-                            La iha rejistu ba Munisipiu {{ $user->munisipiu }} seidauk.<br>
+                            La iha rejistu ba Munisipiu BU {{ $user->munisipiu }} seidauk.<br>
                             <a href="{{ route('pendaftaran.create') }}" class="btn btn-sm btn-danger mt-2">
                                 <i class="fas fa-plus me-1"></i> Rejistu Foun
                             </a>
@@ -227,7 +227,7 @@
                     @forelse($perMunisipiu as $row)
                     <tr>
                         <td class="fw-semibold">
-                            <i class="fas fa-building me-1 text-primary"></i>{{ $row->munisipiu }}
+                            <i class="fas fa-building me-1 text-primary"></i>BU {{ $row->munisipiu }}
                         </td>
                         <td class="text-center fw-bold">{{ $row->total }}</td>
                         <td class="text-center"><span class="badge bg-primary">{{ $row->halo_foun }}</span></td>
@@ -301,7 +301,7 @@
                         <td>
                             @if($p->munisipiu)
                                 <span class="badge" style="background:#e8f4fd;color:#0a58ca;font-size:.78rem;">
-                                    {{ $p->munisipiu }}
+                                    BU {{ $p->munisipiu }}
                                 </span>
                             @else
                                 <span class="text-muted small">—</span>

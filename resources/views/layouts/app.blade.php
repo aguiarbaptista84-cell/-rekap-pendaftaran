@@ -119,7 +119,7 @@
                     <div style="font-size:.68rem;">
                         <span class="badge bg-{{ auth()->user()->badge_role }}" style="font-size:.65rem;">{{ auth()->user()->label_role }}</span>
                         @if(auth()->user()->isUser() && auth()->user()->munisipiu)
-                            <span class="ms-1 text-white opacity-75">{{ auth()->user()->munisipiu }}</span>
+                            <span class="ms-1 text-white opacity-75">BU {{ auth()->user()->munisipiu }}</span>
                         @endif
                     </div>
                 </div>
@@ -142,7 +142,7 @@
         <div class="d-flex align-items-center gap-3">
             @if(auth()->user()->isUser())
                 <span class="badge" style="background:#e8f4fd;color:#0a58ca;">
-                    <i class="fas fa-map-marker-alt me-1"></i>{{ auth()->user()->munisipiu }}
+                    <i class="fas fa-map-marker-alt me-1"></i>BU {{ auth()->user()->munisipiu }}
                 </span>
             @endif
             <span class="text-muted small d-none d-md-inline"><i class="fas fa-calendar-alt me-1"></i>{{ now()->format('d/m/Y') }}</span>
