@@ -24,7 +24,9 @@ Route::middleware(['auth', 'role'])->group(function () {
 
     // Rekap
     Route::get('rekap', [RekapController::class, 'index'])->name('rekap.index');
-    Route::get('rekap/export-csv', [RekapController::class, 'exportCsv'])->name('rekap.export-csv');
+    Route::get('rekap/export-csv',  [RekapController::class, 'exportCsv'])->name('rekap.export-csv');
+    Route::get('rekap/export-pdf',  [RekapController::class, 'exportPdf'])->name('rekap.export-pdf');
+    Route::get('rekap/export-word', [RekapController::class, 'exportWord'])->name('rekap.export-word');
 
     // User Management — super_admin only
     Route::middleware('role:super_admin')->group(function () {

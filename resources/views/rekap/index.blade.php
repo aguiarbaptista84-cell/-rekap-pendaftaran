@@ -46,12 +46,18 @@
                 </select>
             </div>
             @endif
-            <div class="col-12 col-md-2 d-flex gap-2 align-items-end">
+            <div class="col-12 col-md-2 d-flex flex-wrap gap-2 align-items-end">
                 <button type="submit" class="btn btn-danger btn-sm">
                     <i class="fas fa-filter me-1"></i> Filtru
                 </button>
-                <a href="{{ route('rekap.export-csv', request()->query()) }}" class="btn btn-success btn-sm">
+                <a href="{{ route('rekap.export-csv',  request()->query()) }}" class="btn btn-success btn-sm" title="Baixa CSV">
                     <i class="fas fa-file-csv me-1"></i> CSV
+                </a>
+                <a href="{{ route('rekap.export-pdf',  request()->query()) }}" class="btn btn-danger btn-sm" title="Baixa PDF">
+                    <i class="fas fa-file-pdf me-1"></i> PDF
+                </a>
+                <a href="{{ route('rekap.export-word', request()->query()) }}" class="btn btn-primary btn-sm" title="Baixa Word">
+                    <i class="fas fa-file-word me-1"></i> Word
                 </a>
             </div>
         </form>

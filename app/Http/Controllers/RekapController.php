@@ -8,6 +8,7 @@ use App\Helpers\DbHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RekapController extends Controller
 {
@@ -150,5 +151,94 @@ class RekapController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    private function buildRekapData(Request $request): array
+    {
+        $tahun = $request->query('tahun', date('Y'));
+        $bulan = $request->query('bulan', '');
+        $jenis = $request->query('jenis_dokumen', '');
+        $muni  = $request->query('munisipiu', '');
+        /** @var \App\Models\User $user */
+        $user  = Auth::user();
+
+        $query = $this->baseQuery($tahun, $bulan, $jenis);
+        if ($muni && $user->canSeeAll()) {
+            $query->where('munisipiu', $muni);
+        }
+
+        $perStatus = (clone $query)
+            ->select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get()->keyBy('status');
+
+        $perBulan = $this->baseQuery($tahun, '', $jenis)
+            ->when($muni && $user->canSeeAll(), fn($q) => $q->where('munisipiu', $muni))
+            ->select(
+                DB::raw(DbHelper::dateFormat('tanggal_daftar', '%m') . ' as bulan'),
+                DB::raw('count(*) as total')
+            )
+            ->groupBy('bulan')->orderBy('bulan')
+            ->pluck('total', 'bulan')->toArray();
+
+        $detailPerJenis = [];
+        foreach (Pendaftaran::$jenisDokumen as $key => $label) {
+            $q = $this->baseQuery($tahun, $bulan, '')->where('jenis_dokumen', $key);
+            if ($muni && $user->canSeeAll()) {
+                $q->where('munisipiu', $muni);
+            }
+            $detailPerJenis[$key] = [
+                'label'     => $label,
+                'total'     => $q->count(),
+                'halo_foun' => (clone $q)->where('status', 'halo_foun')->count(),
+                'renova'    => (clone $q)->where('status', 'renova')->count(),
+                'lakon'     => (clone $q)->where('status', 'lakon')->count(),
+            ];
+        }
+
+        $bulanList = [
+            '01'=>'Janeiru','02'=>'Fevereiro','03'=>'Marsu','04'=>'Abril',
+            '05'=>'Maiu','06'=>'Juniu','07'=>'Juliu','08'=>'Agustus',
+            '09'=>'Setembru','10'=>'Outubru','11'=>'Novembru','12'=>'Dezembru',
+        ];
+
+        return compact(
+            'tahun', 'bulan', 'jenis', 'muni',
+            'perStatus', 'perBulan', 'detailPerJenis',
+            'bulanList', 'user'
+        ) + [
+            'totalKeseluruhan' => array_sum(array_column($detailPerJenis, 'total')),
+            'jenisDokumen'     => Pendaftaran::$jenisDokumen,
+        ];
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $data     = $this->buildRekapData($request);
+        $tahun    = $data['tahun'];
+        $bulan    = $data['bulan'];
+        $filename = 'rekap-pendaftaran-' . $tahun . ($bulan ? '-' . $bulan : '') . '.pdf';
+
+        $pdf = Pdf::loadView('rekap.print', $data)
+            ->setPaper('A4', 'portrait')
+            ->setOption('defaultFont', 'DejaVu Sans')
+            ->setOption('isRemoteEnabled', false);
+
+        return $pdf->download($filename);
+    }
+
+    public function exportWord(Request $request)
+    {
+        $data     = $this->buildRekapData($request);
+        $tahun    = $data['tahun'];
+        $bulan    = $data['bulan'];
+        $filename = 'rekap-pendaftaran-' . $tahun . ($bulan ? '-' . $bulan : '') . '.doc';
+
+        $html = view('rekap.print', $data)->render();
+
+        return response($html, 200, [
+            'Content-Type'        => 'application/msword',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
     }
 }
