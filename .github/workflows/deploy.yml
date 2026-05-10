@@ -1,0 +1,39 @@
+name: 🚀 Auto Deploy ke VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy ke IDCloudHost VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout kode
+        uses: actions/checkout@v4
+
+      - name: 🔑 Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host:     ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port:     22
+          timeout:  120s
+          script: |
+            echo "=== Mulai deploy otomatis ==="
+            cd /var/www/rekap-pendaftaran
+            bash deploy.sh
+            echo "=== Deploy selesai ==="
+
+      - name: ✅ Health check setelah deploy
+        run: |
+          sleep 5
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.VPS_HOST }}/health || echo "000")
+          echo "Health check status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "⚠️  Health check gagal (status $STATUS)"
+          else
+            echo "✅ Aplikasi berjalan normal"
+          fi
