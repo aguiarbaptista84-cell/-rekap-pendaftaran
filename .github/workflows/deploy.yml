@@ -13,7 +13,8 @@ jobs:
       - name: 🚀 Deploy aplikasi
         run: |
           cd /var/www/rekap-pendaftaran
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
           composer install --no-dev --optimize-autoloader --no-interaction
           php artisan migrate --force
           php artisan config:clear
