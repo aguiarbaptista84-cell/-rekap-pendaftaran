@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\UserController;
+
+// Health check (publik — untuk monitoring uptime)
+Route::get('health', [HealthController::class, 'check'])->name('health');
 
 // Auth
 Route::get('login', [AuthController::class, 'showLogin'])->name('login');
