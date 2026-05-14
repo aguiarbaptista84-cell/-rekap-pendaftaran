@@ -83,6 +83,24 @@ class RekapController extends Controller
             ];
         }
 
+        // Data per munisipiu
+        $muniQuery = $this->baseQuery($tahun, $bulan, $jenis);
+        if ($muni && $user->canSeeAll()) {
+            $muniQuery->where('munisipiu', $muni);
+        }
+        $perMunisipiu = (clone $muniQuery)
+            ->select(
+                'munisipiu',
+                DB::raw('count(*) as total'),
+                DB::raw("sum(case when status='halo_foun' then 1 else 0 end) as halo_foun"),
+                DB::raw("sum(case when status='renova' then 1 else 0 end) as renova"),
+                DB::raw("sum(case when status='lakon' then 1 else 0 end) as lakon")
+            )
+            ->whereNotNull('munisipiu')
+            ->groupBy('munisipiu')
+            ->orderBy('munisipiu')
+            ->get();
+
         $totalKeseluruhan = array_sum(array_column($detailPerJenis, 'total'));
         $tahunList        = range(date('Y'), 2020);
         $jenisDokumen     = Pendaftaran::$jenisDokumen;
@@ -96,7 +114,8 @@ class RekapController extends Controller
         return view('rekap.index', compact(
             'perJenis', 'perStatus', 'perBulan', 'detailPerJenis',
             'totalKeseluruhan', 'tahunList', 'tahun', 'bulan',
-            'jenisDokumen', 'jenis', 'bulanList', 'munisipiuList', 'muni'
+            'jenisDokumen', 'jenis', 'bulanList', 'munisipiuList', 'muni',
+            'perMunisipiu'
         ));
     }
 

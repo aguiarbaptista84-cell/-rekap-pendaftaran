@@ -99,6 +99,79 @@
     </div>
 </div>
 
+{{-- Tabel Per Munisipiu --}}
+@if(auth()->user()->canSeeAll())
+<div class="card stat-card mb-4">
+    <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
+        <i class="fas fa-map-marker-alt me-2 text-danger"></i>Rekap per Munisipiu
+        @if($bulan) <small class="text-muted ms-1">({{ $bulanList[$bulan] ?? $bulan }})</small> @endif
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th width="30">#</th>
+                    <th>Munisipiu</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-center text-primary">Halo Foun</th>
+                    <th class="text-center text-warning">Renova</th>
+                    <th class="text-center text-danger">Lakon</th>
+                    <th class="text-center">% Halo Foun</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($perMunisipiu as $i => $row)
+                <tr>
+                    <td class="text-muted small">{{ $i + 1 }}</td>
+                    <td class="fw-semibold">
+                        <i class="fas fa-building me-1 text-primary"></i>BU {{ $row->munisipiu }}
+                    </td>
+                    <td class="text-center fw-bold">{{ number_format($row->total) }}</td>
+                    <td class="text-center text-primary">{{ number_format($row->halo_foun) }}</td>
+                    <td class="text-center text-warning">{{ number_format($row->renova) }}</td>
+                    <td class="text-center text-danger">{{ number_format($row->lakon) }}</td>
+                    <td class="text-center">
+                        @if($row->total > 0)
+                            @php $pct = ($row->halo_foun / $row->total) * 100 @endphp
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1" style="height:6px;">
+                                    <div class="progress-bar bg-success" style="width:{{ $pct }}%"></div>
+                                </div>
+                                <small>{{ number_format($pct, 1) }}%</small>
+                            </div>
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ route('pendaftaran.index', array_merge(request()->query(), ['munisipiu' => $row->munisipiu])) }}"
+                           class="btn btn-xs btn-outline-primary" style="font-size:.75rem;padding:.2rem .5rem;">
+                            <i class="fas fa-list"></i>
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-3">La iha dadus munisipiu.</td>
+                </tr>
+                @endforelse
+            </tbody>
+            @if($perMunisipiu->count() > 0)
+            <tfoot class="table-dark">
+                <tr>
+                    <td colspan="2" class="fw-bold">TOTAL</td>
+                    <td class="text-center fw-bold">{{ number_format($perMunisipiu->sum('total')) }}</td>
+                    <td class="text-center">{{ number_format($perMunisipiu->sum('halo_foun')) }}</td>
+                    <td class="text-center">{{ number_format($perMunisipiu->sum('renova')) }}</td>
+                    <td class="text-center">{{ number_format($perMunisipiu->sum('lakon')) }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+            @endif
+        </table>
+    </div>
+</div>
+@endif
+
 {{-- Tabel Detail per Jenis --}}
 <div class="card stat-card">
     <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
