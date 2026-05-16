@@ -100,7 +100,7 @@
     <div class="col-lg-5">
         <div class="card stat-card h-100">
             <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
-                <i class="fas fa-chart-pie me-2 text-danger"></i>Distribuisaun per Jenis Dokumentu
+                <i class="fas fa-chart-pie me-2 text-danger"></i>Distribuisaun tuir Tipu Dokumentu
             </div>
             <div class="card-body d-flex align-items-center justify-content-center">
                 <canvas id="chartDokumen" style="max-height:260px;"></canvas>
