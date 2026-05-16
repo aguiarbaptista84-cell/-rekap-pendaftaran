@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Pendaftaran')
-@section('page-title', 'Daftar Pendaftaran Dokumentu')
+@section('title', 'Lista Rejistu')
+@section('page-title', 'Lista Rejistu Dokumentu')
 
 @section('content')
 
@@ -22,7 +22,7 @@
                 <input type="text" name="cari" class="form-control form-control-sm" placeholder="Naran / No. Rejistu / BI..." value="{{ request('cari') }}">
             </div>
             <div class="col-6 col-md-2">
-                <label class="form-label form-label-sm text-muted">Jenis Dokumentu</label>
+                <label class="form-label form-label-sm text-muted">Tipu Dokumentu</label>
                 <select name="jenis_dokumen" class="form-select form-select-sm">
                     <option value="">Hotu</option>
                     @foreach($jenisDokumen as $key => $label)

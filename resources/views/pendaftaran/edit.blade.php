@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Rejistu')
-@section('page-title', 'Edit Pendaftaran')
+@section('title', 'Edita Rejistu')
+@section('page-title', 'Edita Rejistu')
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-9">
         <div class="card stat-card">
             <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
-                <h6 class="fw-semibold mb-0"><i class="fas fa-edit me-2 text-warning"></i>Edit Rejistu: <code>{{ $data->no_registrasi }}</code></h6>
+                <h6 class="fw-semibold mb-0"><i class="fas fa-edit me-2 text-warning"></i>Edita Rejistu: <code>{{ $data->no_registrasi }}</code></h6>
                 <a href="{{ route('pendaftaran.show', $data->id) }}" class="btn btn-sm btn-outline-secondary">
                     <i class="fas fa-arrow-left me-1"></i> Fila
                 </a>
@@ -25,7 +25,7 @@
                             @error('nama_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Jenis Kelamin <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Sexu <span class="text-danger">*</span></label>
                             <select name="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror">
                                 <option value="L" {{ old('jenis_kelamin', $data->jenis_kelamin) === 'L' ? 'selected' : '' }}>Mane (L)</option>
                                 <option value="P" {{ old('jenis_kelamin', $data->jenis_kelamin) === 'P' ? 'selected' : '' }}>Feto (P)</option>
@@ -90,7 +90,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-5">
-                            <label class="form-label fw-semibold">Jenis Dokumentu <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Tipu Dokumentu <span class="text-danger">*</span></label>
                             <select name="jenis_dokumen" id="jenisDokumen" class="form-select @error('jenis_dokumen') is-invalid @enderror">
                                 @foreach($jenisDokumen as $key => $label)
                                     <option value="{{ $key }}" {{ old('jenis_dokumen', $data->jenis_dokumen) === $key ? 'selected' : '' }}>{{ $label }}</option>

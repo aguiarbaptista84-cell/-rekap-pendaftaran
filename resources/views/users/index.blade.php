@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Utilizadór')
-@section('page-title', 'Manajemen Utilizadór Sistema')
+@section('title', 'Jestaun Utilizadór')
+@section('page-title', 'Jestaun Utilizadór Sistema')
 
 @section('content')
 
@@ -96,7 +96,7 @@
                         </td>
                         <td>
                             <div class="d-flex gap-1">
-                                <a href="{{ route('users.edit', $u->id) }}" class="btn btn-xs btn-outline-warning" title="Edit" style="font-size:.75rem;padding:.2rem .5rem;">
+                                <a href="{{ route('users.edit', $u->id) }}" class="btn btn-xs btn-outline-warning" title="Edita" style="font-size:.75rem;padding:.2rem .5rem;">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 @if($u->id !== auth()->id())
@@ -176,7 +176,7 @@
                         </td>
                         <td>
                             <div class="d-flex gap-1">
-                                <a href="{{ route('users.edit', $u->id) }}" class="btn btn-xs btn-outline-warning" title="Edit" style="font-size:.75rem;padding:.2rem .5rem;">
+                                <a href="{{ route('users.edit', $u->id) }}" class="btn btn-xs btn-outline-warning" title="Edita" style="font-size:.75rem;padding:.2rem .5rem;">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 @if($u->id !== auth()->id())

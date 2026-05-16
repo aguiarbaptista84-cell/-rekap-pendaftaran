@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Rejistu')
-@section('page-title', 'Detail Pendaftaran')
+@section('title', 'Detalle Rejistu')
+@section('page-title', 'Detalle Rejistu Dokumentu')
 
 @section('content')
 <div class="row">
@@ -48,7 +48,7 @@
                 <hr>
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <div class="text-muted small">Jenis Dokumentu</div>
+                        <div class="text-muted small">Tipu Dokumentu</div>
                         <div class="fw-semibold">{{ $data->label_jenis_dokumen }}</div>
                         @if($data->kategori_sim)
                             <small class="text-muted">Kategória: {{ $data->kategori_sim }}</small>

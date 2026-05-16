@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Rekapitulasaun')
-@section('page-title', 'Rekapitulasaun Pendaftaran Dokumentu')
+@section('page-title', 'Rekapitulasaun Rejistu Dokumentu')
 
 @section('content')
 
@@ -27,7 +27,7 @@
                 </select>
             </div>
             <div class="col-6 col-md-3">
-                <label class="form-label form-label-sm text-muted">Jenis Dokumentu</label>
+                <label class="form-label form-label-sm text-muted">Tipu Dokumentu</label>
                 <select name="jenis_dokumen" class="form-select form-select-sm">
                     <option value="">Hotu</option>
                     @foreach($jenisDokumen as $key => $label)
@@ -90,7 +90,7 @@
 <div class="card stat-card mb-4">
     <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
         <i class="fas fa-chart-bar me-2 text-danger"></i>
-        Pendaftaran per Fulan — Tinan {{ $tahun }}
+        Rejistu tuir Fulan — Tinan {{ $tahun }}
         @if($bulan) <small class="text-muted ms-1">({{ $bulanList[$bulan] ?? $bulan }})</small> @endif
         @if(auth()->user()->canSeeAll() && $muni) <span class="badge bg-primary ms-1">BU {{ $muni }}</span> @endif
     </div>
@@ -175,13 +175,13 @@
 {{-- Tabel Detail per Jenis --}}
 <div class="card stat-card">
     <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
-        <i class="fas fa-table me-2 text-danger"></i>Detail Rekap per Jenis Dokumentu
+        <i class="fas fa-table me-2 text-danger"></i>Detalle Rekap tuir Tipu Dokumentu
     </div>
     <div class="table-responsive">
         <table class="table table-hover mb-0">
             <thead>
                 <tr>
-                    <th>Jenis Dokumentu</th>
+                    <th>Tipu Dokumentu</th>
                     <th class="text-center">Total</th>
                     <th class="text-center text-primary">Halo Foun</th>
                     <th class="text-center text-warning">Renova</th>
@@ -255,7 +255,7 @@ new Chart(document.getElementById('chartBulan').getContext('2d'), {
     data: {
         labels: bulanLabels,
         datasets: [{
-            label: 'Pendaftaran',
+            label: 'Rejistu',
             data: bulanData,
             backgroundColor: 'rgba(220,20,60,.7)',
             borderColor: '#DC143C',

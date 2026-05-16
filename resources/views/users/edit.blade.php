@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Utilizadór')
-@section('page-title', 'Edit Utilizadór')
+@section('title', 'Edita Utilizadór')
+@section('page-title', 'Edita Utilizadór')
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-7">
         <div class="card stat-card">
             <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
-                <h6 class="fw-semibold mb-0"><i class="fas fa-user-edit me-2 text-warning"></i>Edit: <strong>{{ $user->name }}</strong></h6>
+                <h6 class="fw-semibold mb-0"><i class="fas fa-user-edit me-2 text-warning"></i>Edita: <strong>{{ $user->name }}</strong></h6>
                 <a href="{{ route('users.index') }}" class="btn btn-sm btn-outline-secondary">
                     <i class="fas fa-arrow-left me-1"></i> Fila
                 </a>

@@ -110,7 +110,7 @@
     <div class="col-lg-7">
         <div class="card stat-card h-100">
             <div class="card-header bg-white border-0 pt-3 pb-0 fw-semibold">
-                <i class="fas fa-chart-line me-2 text-danger"></i>Pendaftaran per Bulan ({{ date('Y') }})
+                <i class="fas fa-chart-line me-2 text-danger"></i>Rejistu tuir Fulan ({{ date('Y') }})
             </div>
             <div class="card-body">
                 <canvas id="chartBulan" style="max-height:260px;"></canvas>
@@ -378,7 +378,7 @@ new Chart(ctxBulan, {
     data: {
         labels: bulanLabels,
         datasets: [{
-            label: 'Pendaftaran',
+            label: 'Rejistu',
             data: bulanData,
             backgroundColor: 'rgba(220, 20, 60, 0.7)',
             borderColor: '#DC143C',

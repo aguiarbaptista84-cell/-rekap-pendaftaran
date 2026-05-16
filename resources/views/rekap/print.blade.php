@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<title>Rekapitulasaun Pendaftaran — {{ $tahun }}{{ $bulan ? ' / '.$bulanList[$bulan] : '' }}</title>
+<title>Rekapitulasaun Rejistu — {{ $tahun }}{{ $bulan ? ' / '.$bulanList[$bulan] : '' }}</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 10pt; color: #1a1a2e; background: #fff; }
@@ -92,7 +92,7 @@
         <div class="logo-cell center">
             <h1>REPUBLIKA DEMOKRATIKA TIMOR-LESTE</h1>
             <h2>Ministeriu Justisa — Unidade Dokumentu Viajen</h2>
-            <div class="sub">Rekapitulasaun Pendaftaran Dokumentu Sivil</div>
+            <div class="sub">Rekapitulasaun Rejistu Dokumentu Sivil</div>
         </div>
         <div class="logo-cell right">
             <div class="rdtl-circle" style="background:#1a1a2e;">🇹🇱</div>
@@ -149,7 +149,7 @@
 </div>
 
 <!-- MONTHLY TABLE -->
-<div class="section-title">Pendaftaran por Fulan — {{ $tahun }}</div>
+<div class="section-title">Rejistu tuir Fulan — {{ $tahun }}</div>
 @php $bulanShort = ['01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Abr','05'=>'Mai','06'=>'Jun','07'=>'Jul','08'=>'Ago','09'=>'Set','10'=>'Out','11'=>'Nov','12'=>'Dez']; @endphp
 <div class="months-row">
     @foreach($bulanShort as $bk => $bs)
@@ -162,7 +162,7 @@
 </div>
 
 <!-- DETAIL TABLE -->
-<div class="section-title">Detail Rekap por Jenis Dokumentu</div>
+<div class="section-title">Detalle Rekap tuir Tipu Dokumentu</div>
 
 @php
 $dotColors = [
@@ -175,7 +175,7 @@ $dotColors = [
     <thead>
         <tr>
             <th class="left" style="width:30px;">No.</th>
-            <th class="left">Jenis Dokumentu</th>
+            <th class="left">Tipu Dokumentu</th>
             <th>Total</th>
             <th>Halo Foun</th>
             <th>Renova</th>
@@ -237,7 +237,7 @@ $dotColors = [
 
 <!-- FOOTER -->
 <div class="footer">
-    <div class="left">Rekapitulasaun Pendaftaran Dokumentu Sivil — Sistema BU RDTL</div>
+    <div class="left">Rekapitulasaun Rejistu Dokumentu Sivil — Sistema BU RDTL</div>
     <div class="right">Imprime: {{ now()->format('d/m/Y H:i') }}</div>
 </div>
 

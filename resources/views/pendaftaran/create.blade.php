@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Rejistu Foun')
-@section('page-title', 'Rejistu Pendaftaran Foun')
+@section('page-title', 'Rejistu Dokumentu Foun')
 
 @section('content')
 <div class="row justify-content-center">
@@ -22,7 +22,7 @@
                             @error('nama_lengkap')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Jenis Kelamin <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Sexu <span class="text-danger">*</span></label>
                             <select name="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror">
                                 <option value="L" {{ old('jenis_kelamin','L') === 'L' ? 'selected' : '' }}>Mane (L)</option>
                                 <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }}>Feto (P)</option>
@@ -87,7 +87,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-5">
-                            <label class="form-label fw-semibold">Jenis Dokumentu <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Tipu Dokumentu <span class="text-danger">*</span></label>
                             <select name="jenis_dokumen" id="jenisDokumen" class="form-select @error('jenis_dokumen') is-invalid @enderror">
                                 <option value="">— Hili Dokumentu —</option>
                                 @foreach($jenisDokumen as $key => $label)
