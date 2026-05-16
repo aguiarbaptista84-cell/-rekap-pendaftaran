@@ -24,7 +24,7 @@
                         <div class="fw-semibold">{{ $data->nama_lengkap }}</div>
                     </div>
                     <div class="col-md-3">
-                        <div class="text-muted small">Jenis Kelamin</div>
+                        <div class="text-muted small">Sexu</div>
                         <div class="fw-semibold">{{ $data->jenis_kelamin === 'L' ? 'Mane' : 'Feto' }}</div>
                     </div>
                     <div class="col-md-3">
