@@ -108,7 +108,7 @@
         <div class="px-3 py-2">
             <div class="d-flex align-items-center gap-2 mb-2">
                 <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
-                    style="width:32px;height:32px;font-size:.7rem;background:{{ ['super_admin'=>'#DC143C','diretor'=>'#f08c00','user'=>'#1971c2'][auth()->user()->role] ?? '#666' }};flex-shrink:0;">
+                    style="width:32px;height:32px;font-size:.7rem;background:{{ ['super_admin'=>'#DC143C','diretur_jeral'=>'#0aa2c0','diretor'=>'#f08c00','xefe_departamentu'=>'#6c757d','user'=>'#1971c2'][auth()->user()->role] ?? '#666' }};flex-shrink:0;">
                     {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                 </div>
                 <div style="min-width:0;">

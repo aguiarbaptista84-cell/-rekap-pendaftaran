@@ -29,15 +29,19 @@ class User extends Authenticatable
     ];
 
     public static $roleLabels = [
-        'super_admin' => 'Super Admin',
-        'diretor'     => 'Diretur',
-        'user'        => 'Utilizadór',
+        'super_admin'       => 'Super Admin',
+        'diretur_jeral'     => 'Diretur Jeral',
+        'diretor'           => 'Diretur',
+        'xefe_departamentu' => 'Xefe Departamentu',
+        'user'              => 'Utilizadór',
     ];
 
     public static $roleBadge = [
-        'super_admin' => 'danger',
-        'diretor'     => 'warning',
-        'user'        => 'primary',
+        'super_admin'       => 'danger',
+        'diretur_jeral'     => 'info',
+        'diretor'           => 'warning',
+        'xefe_departamentu' => 'secondary',
+        'user'              => 'primary',
     ];
 
     public function isSuperAdmin(): bool   { return $this->role === 'super_admin'; }
@@ -45,7 +49,7 @@ class User extends Authenticatable
     public function isUser(): bool         { return $this->role === 'user'; }
 
     public function canWrite(): bool       { return in_array($this->role, ['super_admin', 'user']); }
-    public function canSeeAll(): bool      { return in_array($this->role, ['super_admin', 'diretor']); }
+    public function canSeeAll(): bool      { return in_array($this->role, ['super_admin', 'diretur_jeral', 'diretor', 'xefe_departamentu']); }
 
     public function getLabelRoleAttribute(): string
     {

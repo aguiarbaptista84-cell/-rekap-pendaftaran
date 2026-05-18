@@ -91,8 +91,10 @@
 @push('scripts')
 <script>
 const roleInfo = {
-    super_admin: { color:'#DC143C', icon:'fa-shield-alt', text:'Aksés kompletu ba hotu-hotu munisipiu no funsaun sistema.' },
-    diretor:     { color:'#f08c00', icon:'fa-eye',        text:'Bele haree deit (read-only) ba hotu-hotu dadus. La bele kria, edita ka hamoos.' },
+    super_admin:       { color:'#DC143C', icon:'fa-shield-alt', text:'Aksés kompletu ba hotu-hotu munisipiu no funsaun sistema.' },
+    diretur_jeral:     { color:'#0aa2c0', icon:'fa-eye',        text:'Monitorizasaun deit (read-only) ba hotu-hotu dadus munisipiu. La bele kria, edita ka hamoos.' },
+    diretor:           { color:'#f08c00', icon:'fa-eye',        text:'Bele haree deit (read-only) ba hotu-hotu dadus. La bele kria, edita ka hamoos.' },
+    xefe_departamentu: { color:'#6c757d', icon:'fa-eye',        text:'Monitorizasaun deit (read-only) ba hotu-hotu dadus munisipiu. La bele kria, edita ka hamoos.' },
     user:        { color:'#1971c2', icon:'fa-map-marker-alt', text:'Aksés CRUD, maibé limitadu ba munisipiu ne\'ebé atribui deit.' },
 };
 const roleSelect = document.getElementById('roleSelect');

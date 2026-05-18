@@ -27,7 +27,7 @@ class UserController extends Controller
             'name'      => 'required|string|max:100',
             'email'     => 'required|email|unique:users,email',
             'password'  => 'required|string|min:6|confirmed',
-            'role'      => 'required|in:super_admin,diretor,user',
+            'role'      => 'required|in:super_admin,diretur_jeral,diretor,xefe_departamentu,user',
             'munisipiu' => 'nullable|string|max:50',
             'aktif'     => 'boolean',
         ]);
@@ -58,7 +58,7 @@ class UserController extends Controller
             'name'      => 'required|string|max:100',
             'email'     => 'required|email|unique:users,email,' . $user->id,
             'password'  => 'nullable|string|min:6|confirmed',
-            'role'      => 'required|in:super_admin,diretor,user',
+            'role'      => 'required|in:super_admin,diretur_jeral,diretor,xefe_departamentu,user',
             'munisipiu' => 'nullable|string|max:50',
             'aktif'     => 'boolean',
         ]);
