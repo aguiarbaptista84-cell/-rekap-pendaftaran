@@ -24,7 +24,7 @@
             padding: 1rem 1.2rem;
             display: flex; align-items: center; gap: .75rem;
         }
-        .sidebar .brand img { width: 40px; }
+        .sidebar .brand img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #fff; padding: 3px; }
         .sidebar .brand-text { color: #fff; }
         .sidebar .brand-text h6 { margin: 0; font-weight: 700; font-size: .9rem; }
         .sidebar .brand-text small { font-size: .7rem; opacity: .85; }
@@ -58,10 +58,7 @@
 <aside class="sidebar">
     <div class="brand">
         <div>
-            <svg width="38" height="38" viewBox="0 0 38 38">
-                <circle cx="19" cy="19" r="19" fill="#DC143C"/>
-                <text x="19" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="bold">BU</text>
-            </svg>
+            <img src="{{ asset('images/logo.png') }}" alt="Balkaun Uniku">
         </div>
         <div class="brand-text">
             <h6>Sistema Rekapan</h6>
