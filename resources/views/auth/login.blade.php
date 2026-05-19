@@ -21,21 +21,23 @@
             overflow: hidden;
         }
         .login-header {
-            background: var(--rdtl-red);
-            padding: 2rem;
+            background: #fff;
+            padding: 2rem 2rem 1.5rem;
             text-align: center;
-            color: #fff;
+            border-bottom: 1px solid #eee;
         }
-        .login-header .logo-circle {
-            width: 72px; height: 72px; border-radius: 50%;
-            background: rgba(255,255,255,.2);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.8rem; font-weight: 900;
-            border: 3px solid rgba(255,255,255,.5);
+        .login-header .logo-img {
+            width: 110px; height: auto;
+            margin: 0 auto .75rem; display: block;
         }
-        .login-header h5 { margin: 0; font-weight: 700; font-size: 1.05rem; }
-        .login-header small { opacity: .85; font-size: .8rem; }
+        .login-header .brand-name {
+            margin: 0; font-weight: 800; font-size: 1.3rem;
+            color: #1a1a2e; letter-spacing: .02em;
+        }
+        .login-header h5 {
+            margin: .35rem 0 0; font-weight: 800; font-size: 1.05rem;
+            color: #0f3460; letter-spacing: .08em; text-transform: uppercase;
+        }
         .login-body { padding: 2rem; }
         .form-control:focus { border-color: var(--rdtl-red); box-shadow: 0 0 0 .2rem rgba(220,20,60,.15); }
         .btn-login {
@@ -57,9 +59,9 @@
 <body>
 <div class="login-card">
     <div class="login-header">
-        <div class="logo-circle">BU</div>
-        <h5>Sistema Rekapan Dokumentu</h5>
-        <small>República Democrática de Timor-Leste</small>
+        <img src="{{ asset('images/logo.png') }}" alt="Balkaun Uniku" class="logo-img">
+        <p class="brand-name">Balkaun Uniku</p>
+        <h5>Sistema Atendementu</h5>
     </div>
     <div class="login-body">
         <h6 class="fw-semibold mb-4 text-center text-muted">Login ba Sistema</h6>
